@@ -1,0 +1,66 @@
+﻿using Application.Pipelines.Caching;
+using MediatR;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
+
+namespace Application.Pipelines.Behaviors;
+
+public class CacheRemovingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>, ICacheRemoverRequest
+{
+    private readonly IDistributedCache _cache;
+
+    private readonly ILogger<CacheRemovingBehavior<TRequest, TResponse>> _logger;
+
+    public CacheRemovingBehavior(IDistributedCache cache, ILogger<CacheRemovingBehavior<TRequest, TResponse>> logger)
+    {
+        _cache = cache;
+        _logger = logger;
+    }
+
+    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+    {
+        if (request.BypassCache)
+        {
+            return await next();
+        }
+
+        TResponse response = await next();
+        if (request.CacheGroupKey != null)
+        {
+            for (int i = 0; i < request.CacheGroupKey.Count(); i++)
+            {
+                byte[] array = await _cache.GetAsync(request.CacheGroupKey[i], cancellationToken);
+                if (array == null)
+                {
+                    continue;
+                }
+
+                HashSet<string> hashSet = JsonSerializer.Deserialize<HashSet<string>>(Encoding.Default.GetString(array));
+                foreach (string key in hashSet)
+                {
+                    await _cache.RemoveAsync(key, cancellationToken);
+                    _logger.LogInformation("Removed Cache -> " + key);
+                }
+
+                await _cache.RemoveAsync(request.CacheGroupKey[i], cancellationToken);
+                _logger.LogInformation($"Removed Cache -> {request.CacheGroupKey}");
+                await _cache.RemoveAsync($"{request.CacheGroupKey}SlidingExpiration", cancellationToken);
+                _logger.LogInformation($"Removed Cache -> {request.CacheGroupKey}SlidingExpiration");
+            }
+        }
+
+        if (request.CacheKey != null)
+        {
+            await _cache.RemoveAsync(request.CacheKey, cancellationToken);
+            _logger.LogInformation("Removed Cache -> " + request.CacheKey);
+        }
+
+        return response;
+    }
+}

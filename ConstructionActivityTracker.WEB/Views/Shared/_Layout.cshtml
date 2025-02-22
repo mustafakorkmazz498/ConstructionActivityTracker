@@ -1,0 +1,228 @@
+﻿@using ConstructionActivityTracker.WEB.Helpers;
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Construction Activity Tracker</title>
+
+    <!-- Global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="~/global_assets/css/icons/icomoon/styles.min.css" rel="stylesheet" type="text/css">
+    <link href="~/assets/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="~/css/global.css" rel="stylesheet" />
+    <link href="~/devexpress/css/dx.light.compact.css" rel="stylesheet" />
+    <!-- /global stylesheets -->
+    <script type="text/javascript">
+        const ApiBaseUrl = '@ViewBag.ApiBaseUrl';
+        const UiBaseUrl = '@ViewBag.UiBaseUrl';
+    </script>
+    <!-- Core JS files -->
+    <script src="~/global_assets/js/main/jquery.min.js"></script>
+
+    <script src="~/global_assets/js/main/bootstrap.bundle.min.js"></script>
+    <script src="~/devexpress/js/dx.all.js"></script>
+    <script src="~/devexpress/js/localization/dx.messages.tr.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="~/js/global.js"></script>
+    <!-- /core JS files -->
+    <!-- Theme JS files -->
+    <script src="~/global_assets/js/plugins/visualization/d3/d3.min.js"></script>
+    <script src="~/global_assets/js/plugins/ui/moment/moment.min.js"></script>
+    <script src="~/global_assets/js/plugins/pickers/daterangepicker.js"></script>
+
+    <script src="~/assets/js/app.js"></script>
+    <script src="~/global_assets/js/demo_pages/dashboard.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <!-- /theme JS files -->
+</head>
+
+<body>
+    <!-- Main navbar -->
+    <div class="navbar navbar-expand-lg navbar-dark navbar-static">
+        <div class="d-flex flex-1 d-lg-none">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-mobile">
+                <i class="icon-paragraph-justify3"></i>
+            </button>
+            <button class="navbar-toggler sidebar-mobile-main-toggle" type="button">
+                <i class="icon-transmission"></i>
+            </button>
+        </div>
+        <div class="navbar-brand text-center text-lg-left">
+            <a href="@Url.Action("Index","Home")" class="d-inline-block">
+                <img src="~/global_assets/images/ronesans_holding3.png" class="d-none d-sm-block" alt="" style="width:250px; height:auto;">
+                <img src="~/global_assets/images/ronesans_holding3.png" class="d-sm-none" alt="" style="width:250px; height:auto;">
+            </a>
+        </div>
+        <div class="collapse navbar-collapse order-2 order-lg-1" id="navbar-mobile">
+            <div class="ml-3 align-self-center">
+                <button type="button" class="btn btn-outline-light-100 text-white border-transparent btn-icon rounded-pill btn-sm sidebar-control sidebar-main-resize d-none d-lg-inline-flex">
+                    <i class="icon-transmission"></i>
+                </button>
+
+                <button type="button" class="btn btn-outline-light-100 text-white border-transparent btn-icon rounded-pill btn-sm sidebar-mobile-main-toggle d-lg-none">
+                    <i class="icon-cross2"></i>
+                </button>
+            </div>
+
+            <ul class="navbar-nav ml-lg-auto">
+            </ul>
+        </div>
+
+        <ul class="navbar-nav flex-row order-1 order-lg-2 flex-1 flex-lg-0 justify-content-end align-items-center">
+            <li>
+                <span class="badge badge-success my-3 my-lg-0 ml-lg-3">Online</span>
+            </li>
+            <li class="nav-item nav-item-dropdown-lg dropdown dropdown-user h-100">
+                <a href="#" class="navbar-nav-link navbar-nav-link-toggler d-inline-flex align-items-center h-100 dropdown-toggle" data-toggle="dropdown">
+                    <img id="userProfileImage" src="~/global_assets/images/placeholders/placeholder.jpg" class="rounded-pill" height="34" alt="">
+                    <span id="userFullName" class="d-none d-lg-inline-block ml-2"></span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a href="javascript:void(0)" class="dropdown-item" id="logoutButton"><i class="icon-switch2"></i>Çıkış Yap</a>
+                </div>
+            </li>
+        </ul>
+
+    </div>
+    <!-- /main navbar -->
+    <!-- Page content -->
+    <div class="page-content">
+        <!-- Main sidebar -->
+        <div class="sidebar sidebar-dark sidebar-main sidebar-expand-lg">
+
+            <!-- Sidebar content -->
+            <div class="sidebar-content">
+                <!-- Main navigation -->
+                <div class="sidebar-section">
+                    <ul class="nav nav-sidebar" data-nav-type="accordion">
+                        <!-- Faaliyetler Başlığı -->
+                        <li class="nav-item-header">
+                            <div class="text-uppercase font-size-xs line-height-xs">Faaliyetler</div>
+                            <i class="fas fa-tasks" title="Faaliyetler"></i>
+                        </li>
+
+                        <!-- Faaliyet Parametreleri -->
+                        <li class="nav-item nav-item-submenu @(Html.IsAccordionActive(new[] { "ActivityType", "ActivityType" }))">
+                            <a href="#" class="nav-link">
+                                <i class="fas fa-sliders-h"></i> <span>Faaliyet Parametreleri</span>
+                            </a>
+                            <ul class="nav nav-group-sub" data-submenu-title="Basic tables" style="@Html.GetAccordionStyle(new[] { "ActivityType", "ActivityType" })">
+                                <li class="nav-item">
+                                    <a href="@Url.Action("ActivityType", "ActivityType")" class="nav-link @Html.IsActive("ActivityType", "ActivityType")">
+                                        <i class="fas fa-cogs"></i> Faaliyet Tipi Parametresi
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- Faaliyetler -->
+                        <li class="nav-item">
+                            <a href="@Url.Action("Activity", "Activity")" class="nav-link @Html.IsActive("Activity", "Activity")">
+                                <i class="fas fa-briefcase"></i> <span>Faaliyetler</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul class="nav nav-sidebar" data-nav-type="accordion">
+                        <!-- Kullanıcılar ve Roller Başlığı -->
+                        <li class="nav-item-header">
+                            <div class="text-uppercase font-size-xs line-height-xs">Kullanıcılar ve Roller</div>
+                            <i class="fas fa-users-cog" title="Kullanıcılar ve Roller"></i>
+                        </li>
+
+                        <!-- Kullanıcılar ve Roller Menüsü -->
+                        <li class="nav-item nav-item-submenu @(Html.IsAccordionActive(new[] { "CostUnitPrice","CostMonthlyUnitPrice","CostMonthlyAmount", }))">
+                            <a href="#" class="nav-link">
+                                <i class="fas fa-user-cog"></i>
+                                <span>Kullanıcılar ve Roller</span>
+                            </a>
+                            <ul class="nav nav-group-sub" data-submenu-title="Kullanıcılar ve Roller" style="@Html.GetAccordionStyle(new[] { "Auth" })">
+                                <li class="nav-item">
+                                    <a href="@Url.Action("User", "Auth")" class="nav-link @Html.IsActive("User", "Auth")">
+                                        <i class="fas fa-users"></i> Kullanıcı Listesi
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="@Url.Action("OperationClaim", "OperationClaim")" class="nav-link @Html.IsActive("OperationClaim", "OperationClaim")">
+                                        <i class="fas fa-user-tag"></i> Roller
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="@Url.Action("UserOperationClaim", "UserOperationClaim")" class="nav-link @Html.IsActive("UserOperationClaim", "UserOperationClaim")">
+                                        <i class="fas fa-user-shield"></i> Kullanıcı Yetki İşlemleri
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- /main navigation -->
+            </div>
+            <!-- /sidebar content -->
+        </div>
+        <!-- /main sidebar -->
+        <!-- Main content -->
+        <div class="content-wrapper">
+            <!-- Inner content -->
+            <div class="content-inner">
+
+                <!-- Page header -->
+                <div class="page-header page-header-light">
+                    <div class="breadcrumb-line breadcrumb-line-light header-elements-lg-inline">
+                        <div class="d-flex">
+                            <div class="breadcrumb">
+                                <a href="@Url.Action("Index","Home")" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Anasayfa</a>
+                                <span class="breadcrumb-item active">@Html.GetPageTitle()</span>
+                            </div>
+
+                            <a href="#" class="header-elements-toggle text-body d-lg-none"><i class="icon-more"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- /page header -->
+                <!-- Content area -->
+                <div class="content">
+                    @RenderBody()
+                </div>
+                <!-- /content area -->
+            </div>
+            <!-- /inner content -->
+
+        </div>
+        <!-- /main content -->
+
+    </div>
+    <!-- /page content -->
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            // Local storage'den token'ı alıyoruz
+            var token = localStorage.getItem("accessToken");
+            if(token) {
+                // jwt-decode ile token'ı çözümle
+                var decoded = jwt_decode(token);
+                // Token'da eklediğimiz "firstName" ve "lastName" claim'lerinden tam adı oluşturuyoruz
+                var fullName = decoded.firstName + " " + decoded.lastName;
+                // Navbar'daki span elementine tam adı yazdırıyoruz
+                $("#userFullName").text(fullName);
+            }
+        });
+    </script>
+    <script>
+                $(document).ready(function () {
+            $("#logoutButton").on("click", function (event) {
+                event.preventDefault();
+                localStorage.removeItem("accessToken");
+                window.location.href = "/Auth/Login";
+            });
+        });
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+﻿@{
+    ViewBag.Title = "Faaliyetler";
+    ViewBag.PageTitle = "Faaliyetler";
+    ViewBag.PageSubtitle = "Faaliyetler";
+    ViewBag.Breadcrumb = "Faaliyetler";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-body">
+        <div class="alert alert-primary alert-dismissible fade show" role="alert">
+            <strong>Bilgilendirme:</strong> Bu sayfada faaliyetlerinizle ilgili bilgileri girebilirsiniz.
+        </div>
+        <div id="gridToolbar" class="mb-3"></div>
+        <div id="activitiesGrid"></div>
+    </div>
+</div>
+
+<div class="modal fade" id="activityModal" tabindex="-1" role="dialog" aria-labelledby="activityModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="activityModalLabel">Aktivite İşlemi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Kapat">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="activityForm">
+                    <div class="form-group">
+                        <label for="activityTypeId">Faaliyet Tipi</label>
+                        <select class="form-control" id="activityTypeId" name="ActivityTypeId" required>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="activityDate">Tarih</label>
+                        <input type="date" class="form-control" id="activityDate" name="ActivityDate" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Açıklama</label>
+                        <textarea class="form-control" id="description" name="Description" rows="3"></textarea>
+                    </div>
+                    <input type="hidden" id="activityId" name="Id" value="0" />
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">İptal</button>
+                <button type="button" class="btn btn-primary" id="btnSave">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/js/globalToolbar.js"></script>
+    <script src="~/js/activity.js"></script>
+}

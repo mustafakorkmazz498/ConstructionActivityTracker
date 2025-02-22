@@ -1,0 +1,32 @@
+﻿/* Tüm butonlar aynı modern tasarıma sahip olacak şekilde ayarlandı */
+.custom-toolbar-container {
+    display: flex;
+    justify-content: flex-end; /* Butonları sağ üst köşeye hizalar */
+    margin-bottom: 15px; /* Grid ile arasında boşluk bırakır */
+}
+
+.custom-toolbar-button {
+    background-color: #000; /* Siyah arka plan */
+    border: 1px solid #000; /* Siyah kenarlık */
+    color: #fff; /* Beyaz yazı */
+    border-radius: 10px; /* Oval butonlar */
+    padding: 5px 16px; /* Daha geniş buton yapısı */
+    font-size: 14px; /* Modern font boyutu */
+    transition: all 0.3s ease; /* Yumuşak geçiş efekti */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Hafif gölge */
+    margin-right: 10px; /* Butonlar arasında boşluk */
+}
+
+    /* Hover durumunda ters renk geçişi */
+    .custom-toolbar-button:hover {
+        background-color: #fff; /* Beyaz arka plan */
+        border-color: #fff; /* Kenarlık da beyaz */
+        color: #000; /* Siyah yazı */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Daha belirgin gölge */
+    }
+
+    /* Focus durumunda yumuşak bir gölge */
+    .custom-toolbar-button:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.4);
+    }

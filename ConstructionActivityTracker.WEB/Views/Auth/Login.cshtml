@@ -1,0 +1,111 @@
+﻿@{
+    Layout = null; 
+}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Giriş Yap</title>
+
+    <!-- Global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/global_assets/css/icons/icomoon/styles.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/assets/css/all.min.css")" rel="stylesheet" type="text/css" />
+    <!-- /global stylesheets -->
+    <!-- Core JS files -->
+    <script src="@Url.Content("~/global_assets/js/main/jquery.min.js")"></script>
+    <script src="@Url.Content("~/global_assets/js/main/bootstrap.bundle.min.js")"></script>
+    <!-- /core JS files -->
+    <!-- Theme JS files -->
+    <script src="@Url.Content("~/assets/js/app.js")"></script>
+    <!-- /theme JS files -->
+
+    <style>
+        body {
+            background: url('@Url.Content("~/global_assets/images/talan.jpg")') no-repeat center center fixed;
+            background-size: cover;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+        .login-form {
+            max-width: 400px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+            .login-form .card {
+                background: transparent;
+                border: none;
+            }
+
+            .login-form .card-body {
+                padding: 0;
+            }
+    </style>
+</head>
+<body>
+    <!-- Page content -->
+    <div class="page-content">
+        <!-- Main content -->
+        <div class="content-wrapper">
+            <!-- Inner content -->
+            <div class="content-inner">
+                <!-- Content area -->
+                <div class="content d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+                    <!-- Login card -->
+                    <form id="loginForm" class="login-form">
+                        <div class="card mb-0">
+                            <div class="card-body">
+                                <div class="text-center mb-3">
+                                    <img src="@Url.Content("~/global_assets/images/ronesans_holding.png")" alt="Logo" class="img-fluid" />
+                                    <h5 class="mb-0">Hesaba Giriş Yap</h5>
+                                    <span class="d-block text-muted">Bilgileriniz</span>
+                                </div>
+
+                                <div class="form-group form-group-feedback form-group-feedback-left">
+                                    <input type="email" class="form-control" id="email" placeholder="Email" required />
+                                    <div class="form-control-feedback">
+                                        <i class="icon-user text-muted"></i>
+                                    </div>
+                                </div>
+
+                                <div class="form-group form-group-feedback form-group-feedback-left">
+                                    <input type="password" class="form-control" id="password" placeholder="Şifre" required />
+                                    <div class="form-control-feedback">
+                                        <i class="icon-lock2 text-muted"></i>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary btn-block">Giriş Yap</button>
+                                </div>
+
+                                <div class="form-group text-center text-muted content-divider">
+                                    <span class="px-2">Hesabın yok mu?</span>
+                                </div>
+
+                                <div class="form-group">
+                                    <a href="@Url.Content("~/Auth/Register")" class="btn btn-light btn-block">Kayıt Ol</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- /login card -->
+                </div>
+                <!-- /content area -->
+            </div>
+            <!-- /inner content -->
+        </div>
+        <!-- /main content -->
+    </div>
+    <!-- /page content -->
+    <!-- Login JS -->
+    <script src="@Url.Content("~/js/login.js")"></script>
+</body>
+</html>

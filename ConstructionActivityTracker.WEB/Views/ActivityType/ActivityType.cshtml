@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = "Faaliyet Tipi Parametresi";
+    ViewBag.PageTitle = "Faaliyet Tipi Parametresi";
+    ViewBag.PageSubtitle = "Faaliyet Tipi Parametresi";
+    ViewBag.Breadcrumb = "Faaliyet Tipi Parametresi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-body">
+        <div class="alert alert-primary alert-dismissible fade show" role="alert">
+            <strong>Bilgilendirme:</strong> Bu sayfada faaliyet tipi ekleyebilir, güncelleyebilir ve silebilirsiniz.
+        </div>
+        <div id="gridToolbar" class="mb-3"></div>
+        <div id="activityTypeGrid"></div>
+    </div>
+</div>
+
+<div class="modal fade" id="activityTypeModal" tabindex="-1" role="dialog" aria-labelledby="activityTypeModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="activityTypeModalLabel">Faaliyet Tipi İşlemi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Kapat">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="activityTypeForm">
+                    <div class="form-group">
+                        <label for="activityTypeName">Faaliyet Tipi Adı</label>
+                        <input type="text" class="form-control" id="activityTypeName" name="Name" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="activityTypeCode">Faaliyet Tipi Kodu</label>
+                        <input type="text" class="form-control" id="activityTypeCode" name="Code" required />
+                    </div>
+                    <input type="hidden" id="activityTypeId" name="Id" value="0" />
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">İptal</button>
+                <button type="button" class="btn btn-primary" id="btnSave">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/js/globalToolbar.js"></script>
+    <script src="~/js/activityType.js"></script>
+}

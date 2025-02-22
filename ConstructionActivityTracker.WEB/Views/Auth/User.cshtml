@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "Kullanıcılar";
+    ViewBag.PageTitle = "Kullanıcılar";
+    ViewBag.PageSubtitle = "Kullanıcılar";
+    ViewBag.Breadcrumb = "Kullanıcılar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-body">
+        <div class="alert alert-primary alert-dismissible fade show" role="alert">
+            <strong>Bilgilendirme:</strong> Bu sayfada tüm kullanıcıları listeleyebilirsiniz.
+        </div>
+        <div id="userGrid"></div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/js/user.js"></script>
+}
